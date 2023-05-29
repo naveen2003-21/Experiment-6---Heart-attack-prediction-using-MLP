@@ -1,6 +1,6 @@
 # Experiment-6---Heart-attack-prediction-using-MLP
 ## Aim:
-      To construct a  Multi-Layer Perceptron to predict heart attack using Python
+To construct a  Multi-Layer Perceptron to predict heart attack using Python
 ## Algorithm:
 Step 1:Import the required libraries: numpy, pandas, MLPClassifier, train_test_split, StandardScaler, accuracy_score, and matplotlib.pyplot.<br>
 Step 2:Load the heart disease dataset from a file using pd.read_csv().<br>
@@ -15,12 +15,44 @@ Step 10:Print the accuracy of the model.<br>
 Step 11:Plot the error convergence during training using plt.plot() and plt.show().<br>
 
 ## Program:
+```
+import pandas as pd
+import numpy as np
+from sklearn.neural_network import MLPClassifier
+from sklearn.model_selection import train_test_split
+from sklearn.preprocessing import StandardScaler
+from sklearn.metrics import accuracy_score
+import matplotlib.pyplot as plt
 
+d=pd.read_csv("heart.csv")
 
+X=d.iloc[:,:-1].values
+y=d.iloc[:,-1].values
 
+X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.2,random_state=42)
+
+scaler=StandardScaler()
+X_train=scaler.fit_transform(X_train)
+X_test=scaler.fit_transform(X_test)
+
+mlp=MLPClassifier(hidden_layer_sizes=(100,100),max_iter=1000,random_state=42)
+training_loss=mlp.fit(X_train,y_train).loss_curve_
+
+y_pred=mlp.predict(X_test)
+
+accuracy=accuracy_score(y_test,y_pred)
+print("Accuracy:",accuracy)
+
+plt.plot(training_loss)
+plt.title("MLP Taining Loss Convergence")
+plt.xlabel("Iteration")
+plt.ylabel("Training loss")
+plt.show()
+```
 ## Output:
+![](ex6.png)
 
 ## Result:
-     Thus, an ANN with MLP is constructed and trained to predict the heart attack using python.
+Thus, an ANN with MLP is constructed and trained to predict the heart attack using python.
      
 
